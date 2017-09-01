@@ -31,3 +31,6 @@ npm-debug.log
 
 # IDE
 .idea
+
+# bundle
+public/js/bundle.js
