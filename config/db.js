@@ -7,7 +7,8 @@ const sequelize = new Sequelize('bti', 'root', 'root', {
         max: 5,
         min: 0,
         idle: 10000
-    }
+    },
+    timezone: 'Asia/Novosibirsk'
 });
 
 module.exports = sequelize;
