@@ -4,6 +4,6 @@ import ReactDOM from 'react-dom';
 import Container from "./container.jsx";
 
 ReactDOM.render(
-    <Container/>,
-    document.getElementById('container')
+  <Container />,
+  document.getElementById('container')
 );
