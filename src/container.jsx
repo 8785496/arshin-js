@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux'
 
 import Header from "./header.jsx";
 import Aside from "./aside.jsx";
@@ -8,17 +10,33 @@ import VisitorTable from './visitor-table.jsx';
 import EmailTable from "./email-table.jsx";
 import RequestTable from "./request-table.jsx";
 
+import toggleAside from './actions/ui-actions';
+
+@connect(
+  store => {
+    return {
+      showAside: store.UISettings.showAside
+    }
+  },
+  dispatch => {
+    return {
+      toggleAside: bindActionCreators(toggleAside, dispatch)
+    }
+  }
+)
 export default class Container extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       showAside: true
     }
+    //this.toggleAside = this.toggleAside.bind(this);
   }
 
   toggleAside() {
-    let showAside = !this.state.showAside;
-    this.setState({showAside});
+    //
+    debugger
+    this.props.toggleAside();
   }
 
   render() {

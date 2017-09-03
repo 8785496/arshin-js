@@ -34,3 +34,4 @@ npm-debug.log
 
 # bundle
 public/js/bundle.js
+.public
