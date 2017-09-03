@@ -1,31 +1,22 @@
 import React, {Component} from 'react';
-import axios from 'axios';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 
 import {getOS, getBrowser} from './helper';
+import {fetchVisitors} from "./actions/visitor";
 
+@connect(
+  store => ({
+    visitors: store.visitors
+  }),
+  dispatch => ({
+    fetchVisitors: bindActionCreators(fetchVisitors, dispatch)
+  })
+)
 export default class VisitorTable extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      visitors: []
-    };
-  }
-
-  componentWillMount() {
-    axios.get('/api/visitors').then((response) => {
-      const visitors = response.data.map((visitor) => <tr key={visitor.id}>
-        <td>{visitor.id}</td>
-        <td>{visitor.ip}</td>
-        <td>{visitor.uri}</td>
-        <td>{getOS(visitor.agent) + ', ' + getBrowser(visitor.agent)}</td>
-        {visitor.referer && visitor.referer.length > 40
-          ? <td title={visitor.referer}>{visitor.referer.substr(0, 37) + '...'}</td>
-          : <td>{visitor.referer}</td>}
-        <td>{new Date(visitor.time).toLocaleTimeString()}</td>
-        <td>{visitor.location}</td>
-      </tr>);
-      this.setState({visitors});
-    });
+    this.props.fetchVisitors();
   }
 
   render() {
@@ -49,7 +40,17 @@ export default class VisitorTable extends Component {
               </tr>
               </thead>
               <tbody>
-              {this.state.visitors}
+              {this.props.visitors.map(visitor => <tr key={visitor.id}>
+                <td>{visitor.id}</td>
+                <td>{visitor.ip}</td>
+                <td>{visitor.uri}</td>
+                <td>{getOS(visitor.agent) + ', ' + getBrowser(visitor.agent)}</td>
+                {visitor.referer && visitor.referer.length > 40
+                  ? <td title={visitor.referer}>{visitor.referer.substr(0, 37) + '...'}</td>
+                  : <td>{visitor.referer}</td>}
+                <td>{new Date(visitor.time).toLocaleTimeString()}</td>
+                <td>{visitor.location}</td>
+              </tr>)}
               </tbody>
             </table>
           </div>

@@ -1,4 +1,4 @@
-import {TOOGLE_ASIDE} from '../actions/action-types';
+import {TOGGLE_ASIDE} from '../actions';
 
 const stateDefault = {
   showAside: true
@@ -6,7 +6,7 @@ const stateDefault = {
 
 export default (state = stateDefault, action) => {
   switch (action.type) {
-    case TOOGLE_ASIDE:
+    case TOGGLE_ASIDE:
       return {...state, showAside: !state.showAside};
     default:
       return state;

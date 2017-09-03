@@ -1,1 +1,0 @@
-export const TOOGLE_ASIDE = 'TOOGLE_ASIDE';

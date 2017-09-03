@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux'
 
 import Header from "./header.jsx";
 import Aside from "./aside.jsx";
@@ -10,32 +9,14 @@ import VisitorTable from './visitor-table.jsx';
 import EmailTable from "./email-table.jsx";
 import RequestTable from "./request-table.jsx";
 
-import toggleAside from './actions/ui-actions';
-
-@connect(
-  store => {
-    return {
-      showAside: store.UISettings.showAside
-    }
-  },
-  dispatch => {
-    return {
-      toggleAside: bindActionCreators(toggleAside, dispatch)
-    }
-  }
-)
+@connect(store => ({showAside: store.UISettings.showAside}))
 export default class Container extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      showAside: true
-    }
-    //this.toggleAside = this.toggleAside.bind(this);
+    this.toggleAside = this.toggleAside.bind(this);
   }
 
   toggleAside() {
-    //
-    debugger
     this.props.toggleAside();
   }
 
@@ -43,9 +24,9 @@ export default class Container extends Component {
     return (
       <Router>
         <div>
-          <Header toggleAside={this.toggleAside.bind(this)}/>
-          <Aside showAside={this.state.showAside}/>
-          <section id="main-content" class={this.state.showAside ? '' : 'merge-left'}>
+          <Header />
+          <Aside showAside={this.props.showAside} />
+          <section id="main-content" class={this.props.showAside ? '' : 'merge-left'}>
             <section class="wrapper">
               <Route exact path="/admin/emails" component={EmailTable}/>
               <Route exact path="/admin/requests" component={RequestTable}/>

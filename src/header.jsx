@@ -1,7 +1,17 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 
+import {toggleAside} from './actions';
+
+@connect()
 export default class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.toggleAside = bindActionCreators(toggleAside, this.props.dispatch)
+  }
+
   render() {
     return (
       <header class="header fixed-top clearfix">
@@ -10,7 +20,7 @@ export default class Header extends Component {
             ARSHIN
           </a>
           <div class="sidebar-toggle-box">
-            <div class="fa fa-bars" onClick={this.props.toggleAside}></div>
+            <div class="fa fa-bars" onClick={this.toggleAside}></div>
           </div>
         </div>
         <div class="nav notify-row" id="top_menu">
